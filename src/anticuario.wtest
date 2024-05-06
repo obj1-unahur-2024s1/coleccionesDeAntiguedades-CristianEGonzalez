@@ -1,0 +1,49 @@
+import anticuario.*
+
+test "adquirir un gramofono y un telegrafo y chequear que esté en stock" {
+
+	anticuario.adquirir(gramofono)
+	anticuario.adquirir(telegrafo)
+	assert.equals([gramofono, telegrafo], anticuario.stockActual())
+
+}
+
+test "adquirir un lote de antiguedades de reloj morbier y gramofono"{
+	anticuario.adquirirLote([relojMorbier,gramofono])
+	assert.equals([relojMorbier,gramofono], anticuario.stockActual())
+}
+
+test "hay alguna antiguedad en stock"{
+	anticuario.adquirirLote([telegrafo,gramofono])
+	assert.that(anticuario.hayStock())
+}
+
+test "hay 3 antiguedades en stock"{
+	anticuario.adquirirLote([telegrafo,gramofono,relojMorbier])
+	assert.equals(3, anticuario.cantidadDeAntiguedades())
+}
+
+test "la ultima antiguedad adquirida es el telegrafo"{
+	anticuario.adquirirLote([relojMorbier,gramofono])
+	anticuario.adquirir(telegrafo)
+	assert.equals(telegrafo, anticuario.ultimaAntiguedadAdquirida())
+}
+
+test "el reloj morbier tiene 174 años de antigüedad"{
+	assert.equals(174, anticuario.aniosDeAntiguedad(relojMorbier))
+}
+
+test "el reloj morbier es muy antiguo"{
+	assert.that(anticuario.esMuyAntiguo(relojMorbier))
+}
+
+test "restaurar reloj morbier"{
+	anticuario.restaurar(relojMorbier)
+	assert.that(relojMorbier.buenEstado())
+}
+
+test "restaurar telegrafo cuando es la antiguedad nro 2 del depósito"{
+	anticuario.adquirirLote([relojMorbier,telegrafo,gramofono])
+	anticuario.restaurarAntiguedadNro(2)	
+	assert.that(telegrafo.buenEstado())
+}
